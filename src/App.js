@@ -1,7 +1,11 @@
 import React from 'react';
 import './App.css';
 import api from './api';
-import PostView from './Components/PostView'
+import PostView from './Components/PostView';
+
+// ui/ux
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
 
 class App extends React.Component {
   
@@ -51,7 +55,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Container maxWidth="lg">
         <div className="PostingSection">
+          <Paper classNmae="PosingForm">
           <h2>대나무 숲 글 작성하기</h2>
           <form onSubmit={this.handlingSubmit}>
             <input 
@@ -66,7 +72,7 @@ class App extends React.Component {
             />
             <button type="submit">제출하기</button>
           </form>
-
+          </Paper>
         </div>
         <div className="ViewSection">
           {
@@ -78,6 +84,7 @@ class App extends React.Component {
             )
           }
         </div>
+        </Container>
       </div>
     );
   }
