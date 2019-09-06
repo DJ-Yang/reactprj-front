@@ -35,7 +35,18 @@ class App extends React.Component {
     event.preventDefault()
     let result = await api.createPost({title:this.state.title, content:this.state.content})
     console.log("완료됨!", result)
+
+    // 글을 작성했을 때 전체화면에도 노출시키는 것
+    this.setState({title:'', content:''})
+    this.getPosts()
   }
+
+  // 삭제 함수
+  handlingDelete =  async (event) =>  {
+    await api.deletePost(event.target.value)
+    this.getPosts()
+  }
+
 
   render() {
     return (
@@ -60,7 +71,11 @@ class App extends React.Component {
         <div className="ViewSection">
           {
             this.state.results.map((post) => 
-            <PostView key={post.id} id={post.id} title={post.title} content={post.content} />)
+            <div>
+            <PostView key={post.id} id={post.id} title={post.title} content={post.content} />
+            <button value={post.id} onClick={this.handlingDelete}>삭제</button>
+            </div>
+            )
           }
         </div>
       </div>
