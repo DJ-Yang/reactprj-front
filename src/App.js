@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import api from './api';
+import PostView from './Components/PostView'
 
 class App extends React.Component {
   
@@ -9,7 +10,18 @@ class App extends React.Component {
     this.state = {
       title: '',
       content: '',
+      results: [],
     }
+  }
+
+  componentDidMount() {
+    this.getPosts()
+  }
+
+  async getPosts() {
+    const _results = await api.getAllPosts()
+    console.log(_results.data)
+    this.setState({results: _results.data})
   }
 
   handlingChange = (event) => {
@@ -45,7 +57,12 @@ class App extends React.Component {
           </form>
 
         </div>
-        <div className="ViewSection"></div>
+        <div className="ViewSection">
+          {
+            this.state.results.map((post) => 
+            <PostView key={post.id} id={post.id} title={post.title} content={post.content} />)
+          }
+        </div>
       </div>
     );
   }
